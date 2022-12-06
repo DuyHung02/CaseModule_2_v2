@@ -1,44 +1,35 @@
 import java.util.Scanner;
-import Account.ManagerAccount;
+
+import Account.Account;
+import Manager.ManagerAccount;
+import Manager.ManagerLogin;
 
 public class Main {
     static Scanner scanner = new Scanner(System.in);
-    static ManagerAccount managerAccount = new ManagerAccount();
 
     public static void main(String[] args) {
         String menu = """
-                1. Danh sách tài khoản
-                2. Đăng kí
-                3. Đăng nhập
-                4. Đổi mật khẩu
-                5. Tìm tài khoản
-                6. Thoát
+                1. Đăng kí
+                2. Đăng nhập
+                3. Thoát
                 Chọn chức năng:\s""";
         int choice = 0;
-        while (choice != 6) {
+        while (choice != 3) {
             System.out.println(menu);
             try {
                 choice = Integer.parseInt(scanner.nextLine());
                 switch (choice) {
                     case 1:
-                        managerAccount.show();
+                        Account account = ManagerAccount.createAccount();
+                        ManagerAccount.register(account);
                         break;
                     case 2:
-                        managerAccount.register();
+                        ManagerLogin.login();
                         break;
                     case 3:
-                        managerAccount.login();
-                        break;
-                    case 4:
-                        managerAccount.editPassword();
-                        break;
-                    case 5:
-                        managerAccount.searchAccount();
-                        break;
-                    case 6:
                         break;
                     default:
-                        System.out.println("Không có chức năng này");
+                        System.err.println("Không có chức năng này!!\n");
                 }
             } catch (NumberFormatException e) {
                 System.err.println("Vui lòng nhập số!!! \n");

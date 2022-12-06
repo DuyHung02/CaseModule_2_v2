@@ -1,5 +1,7 @@
 package Account;
 
+import Manager.ManagerAccount;
+
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -7,20 +9,37 @@ public class CreateAccount {
     static Scanner scanner = new Scanner(System.in);
     static ManagerAccount managerAccount = new ManagerAccount();
 
+    public int id() {
+        int id = 1;
+        while (true) {
+            if (managerAccount.checkId(id)) {
+                ++id;
+            } else {
+                return id;
+            }
+        }
+    }
+
+    public String name(){
+        System.out.println("[Tên người sử dụng]: ");
+        String name = scanner.nextLine();
+        return name;
+    }
+
     public String username() {
         while (true) {
             System.out.println("[Nhập tài khoản Gmail]: ");
             String username = scanner.nextLine();
-            Pattern pattern = Pattern.compile("^[A-Za-z0-9]+[A-Za-z0-9]*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)$");
+            String regex = "^[A-Za-z0-9]+[A-Za-z0-9]*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)$";
             if (managerAccount.findAccountByUser(username) == -1) {
-                if (pattern.matcher(username).find()) {
+                if (username.matches(regex)) {
                     System.out.println("Tài khoản hợp lệ \n");
                     return username;
                 } else {
-                    System.err.println("Tài khoản không hợp lệ \n");
+                    System.err.println("Tài khoản không hợp lệ!!" + "\n");
                 }
             } else {
-                System.err.println("Tài khoản đã tồn tại \n");
+                System.err.println("Tài khoản đã tồn tại" + "\n");
             }
         }
     }
@@ -32,10 +51,10 @@ public class CreateAccount {
             String password = scanner.nextLine();
             Pattern pattern = Pattern.compile("^[A-Z].{7,}$");
             if (pattern.matcher(password).find()) {
-                System.out.println("Mật khẩu hợp lệ \n");
+                System.out.println("Mật khẩu hợp lệ" + "\n");
                 return password;
             } else {
-                System.err.println("Mật khẩu không hợp lệ!!! \n");
+                System.err.println("Mật khẩu không hợp lệ!!!" + "\n");
             }
         }
     }
@@ -50,6 +69,25 @@ public class CreateAccount {
                 return phone;
             } else {
                 System.err.println("Số điện thoại không hợp lệ!!! \n");
+            }
+        }
+    }
+
+    public int role() {
+        int choice;
+        String menu = "Chọn quyền\n" +
+                "1. Admin\n" +
+                "2. Guest\n";
+        while (true) {
+            System.out.println(menu);
+            choice = Integer.parseInt(scanner.nextLine());
+            switch (choice) {
+                case 1:
+                    return 1;
+                case 2:
+                    return -1;
+                default:
+                    System.out.println("Không có chức năng này");
             }
         }
     }

@@ -1,56 +1,64 @@
-package Account;
+package Manager;
 
-import java.util.ArrayList;
+import Account.Account;
+import Account.CreateAccount;
+import ReadWriteFile.ReadWriteAccount;
+
+
 import java.util.List;
-import java.util.Objects;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 public class ManagerAccount {
-    Scanner scanner = new Scanner(System.in);
+    static Scanner scanner = new Scanner(System.in);
     static CreateAccount createAccount = new CreateAccount();
-    static List<Account> accounts = new ArrayList<>();
+    public static List<Account> accounts = ReadWriteAccount.readFile();
 
-
-    public Account createAccount() {
-        return new Account(createAccount.username(), createAccount.password(), createAccount.phoneNumber());
+    public static Account createAccount() {
+        return new Account(createAccount.id(), createAccount.name(), createAccount.username(), createAccount.password(), createAccount.phoneNumber(), createAccount.role());
     }
 
-    public void show() {
+    public static void show() {
         System.out.println("Tổng số tài khoản hiện có: " + "<" + accounts.size() + ">");
         for (int i = 0; i < accounts.size(); i++) {
             System.out.println(accounts.get(i).toString());
         }
     }
 
-    public void register() {
-        accounts.add(createAccount());
+    public static void register(Account account) {
+        accounts.add(account);
+        ReadWriteAccount.writeFile(accounts);
         System.out.println("Tạo thành công! \n");
     }
 
-    public void login() {
+    public static int checkLogin() {
         int count = 3;
         while (true) {
             System.out.println("[Nhập tài khoản]: ");
             String username = scanner.nextLine();
             System.out.println("[Nhập mật khẩu]: ");
             String password = scanner.nextLine();
-            if (checkAccount(username, password)) {
+            if (checkAccount(username, password) == 1 || checkAccount(username, password) == -1) {
                 System.out.println("Đăng nhập thành công! \n");
-                return;
+                if (checkAccount(username, password) == 1) {
+                    System.out.println("Hello Admin " + checkName(username, password) + " !" + "\n");
+                    return 1;
+                } else {
+                    System.out.println("Hello name " + checkName(username, password) + " !" + "\n");
+                    return -1;
+                }
             } else {
                 count--;
                 System.err.println("Sai thông tin!!!");
                 System.err.println("Nhập sai 3 lần sẽ tự động thoát");
                 System.out.println("Số lần còn lại: " + "(" + count + ")\n");
                 if (count == 0) {
-                    return;
+                    return 0;
                 }
             }
         }
     }
 
-    public boolean backOrNext() {
+    public static boolean backOrNext() {
         String menu = """
                 1. Quay lại Menu\s
                 2. Nhập lại\s
@@ -70,22 +78,23 @@ public class ManagerAccount {
         }
     }
 
-    public void editPassword() {
+    public static void editPassword() {
         while (true) {
             System.out.println("[Nhập tài khoản]: ");
             String username = scanner.nextLine();
-            System.out.println("[Nhập mật khẩu]: ");
+            System.out.println("[Nhập mật khẩu cũ]: ");
             String password = scanner.nextLine();
             while (true) {
-                if (checkAccount(username, password)) {
+                if (checkAccount(username, password) == 1 || checkAccount(username, password) == -1) {
                     System.out.println("(Lưu ý: Mật khẩu ít nhất 8 kí tự, viết hoa chữ cái đầu)");
                     System.out.println("[Nhập mật khẩu mới]: ");
                     String newpassword = scanner.nextLine();
                     if (newpassword.matches("^[A-Z].{7,}$")) {
                         for (int i = 0; i < accounts.size(); i++) {
                             if (accounts.get(i).getUsername().equals(username) && accounts.get(i).getPassword().equals(password)) {
-                                Account newAccount = new Account(accounts.get(i).getId(), username, newpassword, accounts.get(i).getPhone());
+                                Account newAccount = new Account(accounts.get(i).getId(), accounts.get(i).getName(), username, newpassword, accounts.get(i).getPhone(), accounts.get(i).getRole());
                                 accounts.set(i, newAccount);
+                                ReadWriteAccount.writeFile(accounts);
                                 System.out.println("Đổi thành công! \n");
                                 return;
                             }
@@ -108,7 +117,7 @@ public class ManagerAccount {
         }
     }
 
-    public void searchAccount() {
+    public static void searchAccount() {
         System.out.println("[Nhập tên tài khoản]: ");
         String username = scanner.nextLine();
         if (findAccountByUser(username) >= 0) {
@@ -122,7 +131,7 @@ public class ManagerAccount {
     //    ( . .)
     //    | v  > <==3 cak
 
-    public int findAccountByUser(String username) {
+    public static int findAccountByUser(String username) {
         for (int i = 0; i < accounts.size(); i++) {
             if (accounts.get(i).getUsername().equals(username)) {
                 return i;
@@ -131,12 +140,32 @@ public class ManagerAccount {
         return -1;
     }
 
-    public boolean checkAccount(String username, String password) {
+    public static int checkAccount(String username, String password) {
         for (int i = 0; i < accounts.size(); i++) {
             if (accounts.get(i).getUsername().equals(username) && accounts.get(i).getPassword().equals(password)) {
+                if (accounts.get(i).getRole() == 1) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            }
+        } return 0;
+    }
+
+    public static boolean checkId(int id) {
+        for (int i = 0; i < accounts.size(); i++) {
+            if (accounts.get(i).getId() == id) {
                 return true;
             }
         }
         return false;
+    }
+
+    public static String checkName(String username, String password) {
+        for (int i = 0; i < accounts.size(); i++) {
+            if (accounts.get(i).getUsername().equals(username) && accounts.get(i).getPassword().equals(password)) {
+                return accounts.get(i).getName();
+            }
+        } return null;
     }
 }

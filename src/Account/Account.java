@@ -1,27 +1,23 @@
 package Account;
 
-public class Account {
-    static int genid = 0;
-    private int id;
+import java.io.Serializable;
+
+public class Account implements Serializable {
+    private int id = 0;
+    private String name;
     private String username;
     private String password;
     private String phone;
+    private int role;
 
-    public Account(String username, String passwork, String phone, String birthday) {
-    }
 
-    public Account(int id, String username, String password, String phone) {
+    public Account(int id, String name, String username, String password, String phone, int role) {
         this.id = id;
+        this.name = name;
         this.username = username;
         this.password = password;
         this.phone = phone;
-    }
-
-    public Account(String username, String password, String phone) {
-        this.id = ++genid;
-        this.username = username;
-        this.password = password;
-        this.phone = phone;
+        this.role = role;
     }
 
     public Account(String username, String password) {
@@ -61,9 +57,26 @@ public class Account {
         this.phone = phone;
     }
 
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public String toString() {
         return  "Account ID : " + id + "\n" +
+                "Người sử dụng: " + name + '\n' +
                 "Username   : " + username + '\n' +
                 "Phone      : " + phone + '\n' +
                 "---------------------------------------";
