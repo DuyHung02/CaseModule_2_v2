@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Scanner;
 
 import Account.Account;
@@ -6,6 +7,7 @@ import Manager.ManagerLogin;
 
 public class Main {
     static Scanner scanner = new Scanner(System.in);
+    static List<Account> accounts = ManagerAccount.accounts;
 
     public static void main(String[] args) {
         String menu = """

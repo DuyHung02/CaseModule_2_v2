@@ -76,27 +76,6 @@ public class CreateAccount {
     }
 
     public int role() {
-        int choice;
-        String menu = """
-                Chọn quyền
-                1. Admin
-                2. Guest
-                """;
-        while (true) {
-            try {
-                System.out.println(menu);
-                choice = Integer.parseInt(scanner.nextLine());
-                switch (choice) {
-                    case 1:
-                        return 1;
-                    case 2:
-                        return -1;
-                    default:
-                        System.err.println("Không có chức năng này!!" + '\n');
-                }
-            } catch (NumberFormatException e) {
-                System.err.println("Nhập số!!" + '\n');
-            }
-        }
+        return -1;
     }
 }

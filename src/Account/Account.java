@@ -15,7 +15,14 @@ public class Account implements Serializable {
     private double money = 0;
     private int role;
 
-
+    public Account(int id, String name, String username, String password, String phone, int role) {
+        this.id = id;
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.phone = phone;
+        this.role = role;
+    }
 
     public Account(int id, String name, String username, String password, String phone, double money, int role) {
         this.id = id;
@@ -92,19 +99,19 @@ public class Account implements Serializable {
     @Override
     public String toString() {
         return  "Account ID : " + id + "\n" +
-                "Người sử dụng: " + name + '\n' +
-                "Username   : " + username + '\n' +
-                "Phone      : " + phone + '\n' +
-                "---------------------------------------";
+                "Người sử dụng: " + name + "\n" +
+                "Username: " + username + "\n" +
+                "Phone: " + phone + '\n' +
+                "--------------------------------------------------";
     }
 
     public String inFoGuest() {
-        return  "Account ID    : " + id + "\n" +
-                "Người sử dụng : " + name + '\n' +
+        return  "    [ Profile " + name + " ]" + '\n' +
+                "Account ID    : " + id + "\n" +
                 "Username      : " + username + '\n' +
                 "Password      : " + password + '\n' +
                 "Phone         : " + phone + '\n' +
                 "Số dư         : " + money + '\n' +
-                "---------------------------------------";
+                "--------------------------------------------------";
     }
 }

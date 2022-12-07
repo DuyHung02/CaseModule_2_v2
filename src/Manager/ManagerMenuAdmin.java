@@ -8,6 +8,7 @@ public class ManagerMenuAdmin extends ManagerAdmin {
         while (true) {
             try {
                 MenuAdmin.menuAdminAccount();
+                System.out.println("Chọn: ");
                 choice = Integer.parseInt(scanner.nextLine());
                 switch (choice) {
                     case 1:
@@ -21,6 +22,9 @@ public class ManagerMenuAdmin extends ManagerAdmin {
                         break;
                     case 4:
                         removeAccountById();
+                        break;
+                    case 5:
+                        choiceRole();
                         break;
                     case 0:
                         return;

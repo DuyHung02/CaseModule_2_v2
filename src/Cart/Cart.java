@@ -20,39 +20,49 @@ public class Cart extends ManagerProduct {
         List<Product> carts = ReadWriteCart.readFileCart(username);
         while (true) {
             ManagerProduct.show();
-            while (true) {
-                System.out.println("Nhập tên món muốn thêm: ");
-                String choiceName = scanner.nextLine();
-                if (checkProductByName(choiceName) >= 0) {
-                    for (int i = 0; i < products.size(); i++) {
-                        if (products.get(i).getNameproduct().equals(choiceName)) {
-                            Product product = new Product(products.get(i).getNameproduct(), products.get(i).getPriceproduct(), products.get(i).getClassify());
-                            carts.add(product);
-                            ReadWriteCart.writeFileCart(carts, username);
-                            System.out.println("ok!!" + '\n');
-                        }
+            System.out.println("Nhập tên món muốn thêm: ");
+            String choiceName = scanner.nextLine();
+            if (checkProductByName(choiceName) >= 0) {
+                for (int i = 0; i < products.size(); i++) {
+                    if (products.get(i).getNameproduct().equals(choiceName)) {
+                        Product product = new Product(products.get(i).getNameproduct(), products.get(i).getPriceproduct(), products.get(i).getClassify());
+                        carts.add(product);
+                        ReadWriteCart.writeFileCart(carts, username);
+                        System.out.println("ok!!" + '\n');
                     }
-                    System.out.println("1. Chọn tiếp");
-                    System.out.println("2. Lưu và thoát");
-                    int choice = 0;
-                    try {
-                        choice = Integer.parseInt(scanner.nextLine());
-                        switch (choice) {
-                            case 1:
-                                break;
-                            case 2:
-                                return;
-                            default:
-                                System.err.println("Không có chức năng này!!" + '\n');
-                        }
-                    } catch (NumberFormatException e) {
-                        System.err.println("Nhập số!!" + '\n');
-                    }
-                } else {
-                    System.err.println("Không tìm thấy món!!" + '\n');
                 }
+                System.out.println("1. Chọn tiếp");
+                System.out.println("2. Lưu và thoát");
+                int choice = 0;
+                try {
+                    choice = Integer.parseInt(scanner.nextLine());
+                    switch (choice) {
+                        case 1:
+                            break;
+                        case 2:
+                            return;
+                        default:
+                            System.err.println("Nhập (1) hoặc (2) !!" + '\n');
+                    }
+                } catch (NumberFormatException e) {
+                    System.err.println("Nhập số!!" + '\n');
+                }
+            } else {
+                System.err.println("Không tìm thấy món!!");
+                System.out.println("Tìm lại?");
+                System.out.println("1. Đồng ý");
+                System.out.println("2. Thoát");
+                int choice3 = Integer.parseInt(scanner.nextLine());
+                switch (choice3) {
+                    case 1:
+                        break;
+                    case 2:
+                        return;
+                    default:
+                        System.err.println("Nhập (1) hoặc (2) !!" + '\n');
+                }
+                break;
             }
-
         }
     }
 
@@ -78,7 +88,7 @@ public class Cart extends ManagerProduct {
                 case 0:
                     return 0;
                 default:
-                    System.err.println("Không có chức năng này");
+                    System.err.println("Nhập (1) hoặc (2) !!" + '\n');
             }
         }
     }

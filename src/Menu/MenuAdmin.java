@@ -8,10 +8,15 @@ public class MenuAdmin {
     public static int menuAdmin() {
         int choice;
         String menu = """
-                (Admin) Chọn chức năng:\s
-                1. Quản lý tài khoản
-                2. Quản lý sản phẩm
-                0. Đăng xuất""";
+                o _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ o
+                |                                     |
+                |   (Admin) Chọn chức năng:           |
+                |   1. Quản lý tài khoản              |
+                |   2. Quản lý sản phẩm               |
+                |   0. Đăng xuất                      |
+                |                                     |
+                o _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ o
+                     """;
         while (true) {
             try {
                 System.out.println(menu);
@@ -34,12 +39,17 @@ public class MenuAdmin {
 
     public static void menuAdminAccount() {
         String menu = """
-                Chọn chức năng: \s
-                1. Hiển thị danh sách tài khoản
-                2. Tìm kiếm tài khoản
-                3. Sửa tài khoản
-                4. Xóa tài khoản
-                0. Thoát
+              o _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ o
+              |                                     |
+              |   Chọn chức năng:                   |
+              |   1. Hiển thị danh sách tài khoản   |
+              |   2. Tìm kiếm tài khoản             |
+              |   3. Sửa tài khoản                  |
+              |   4. Xóa tài khoản                  |
+              |   5. Cấp quyền                      |
+              |   0. Thoát                          |
+              |                                     |
+              o _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ o
                 """;
         System.out.println(menu);
     }

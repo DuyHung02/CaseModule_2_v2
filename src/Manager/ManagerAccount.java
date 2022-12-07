@@ -34,10 +34,10 @@ public class ManagerAccount {
     public static int checkLogin(String username, String password) {
         while (true) {
             if (checkAccount(username, password) == 1) {
-                System.out.println("Hello Admin " + checkName(username, password) + " !" + "\n");
+                System.out.println("    [ Hello Admin " + checkName(username, password) + " ! ]" + "\n");
                 return 1;
             } else {
-                System.out.println("Hello " + checkName(username, password) + " !" + "\n");
+                System.out.println("    [ Hello " + checkName(username, password) + " ! ]" + "\n");
                 return -1;
             }
         }

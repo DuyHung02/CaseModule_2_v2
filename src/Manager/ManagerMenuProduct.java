@@ -9,7 +9,7 @@ public class ManagerMenuProduct extends ManagerProduct {
         while (true) {
             try {
                 MenuProduct.menuProduct();
-                System.out.println("Chọn chức năng");
+                System.out.println("Chọn: ");
                 choice = Integer.parseInt(scanner.nextLine());
                 switch (choice) {
                     case 1:

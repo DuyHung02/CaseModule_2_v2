@@ -72,16 +72,18 @@ public class Product implements Serializable {
     @Override
     public String toString() {
         return "ID sản phẩm: " + id +
-                "  Món: " + nameproduct +
-                "  Giá: " + priceproduct +
-                "  Loại: " + classify +
-                "  Số lượng: " + amount + "\n";
+                "  Món: " + nameproduct + "\n" +
+                "  Giá: " + priceproduct + "\n" +
+                "  Loại: " + classify + "\n" +
+                "  Số lượng: " + amount + "\n" +
+                "--------------------------------------------------" + '\n';
     }
 
 
     public String displayCart() {
         return  "Món: " + nameproduct + '\n' +
                 "Giá: " + priceproduct + '\n' +
-                "Loại: " + classify + '\n';
+                "Loại: " + classify + '\n' +
+                "--------------------------------------------------" + '\n';
     }
 }
