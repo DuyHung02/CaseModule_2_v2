@@ -1,8 +1,11 @@
 package Product;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 public class Product implements Serializable {
+    @Serial
+    private static final long serialVersionUID = -356273567659072509L;
     private int id;
     private String nameproduct;
     private double priceproduct;
@@ -15,6 +18,12 @@ public class Product implements Serializable {
         this.priceproduct = priceproduct;
         this.classify = classify;
         this.amount = amount;
+    }
+
+    public Product(String nameproduct, double priceproduct, String classify) {
+        this.nameproduct = nameproduct;
+        this.priceproduct = priceproduct;
+        this.classify = classify;
     }
 
     public Product() {
@@ -62,10 +71,17 @@ public class Product implements Serializable {
 
     @Override
     public String toString() {
-        return "ID sản phẩm: " + id + "\n" +
-                "Món: " + nameproduct + '\n' +
+        return "ID sản phẩm: " + id +
+                "  Món: " + nameproduct +
+                "  Giá: " + priceproduct +
+                "  Loại: " + classify +
+                "  Số lượng: " + amount + "\n";
+    }
+
+
+    public String displayCart() {
+        return  "Món: " + nameproduct + '\n' +
                 "Giá: " + priceproduct + '\n' +
-                "Loại: " + classify + '\n' +
-                "Số lượng: " + amount + "\n";
+                "Loại: " + classify + '\n';
     }
 }

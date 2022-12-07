@@ -23,7 +23,7 @@ public class CreateProduct {
         while (true) {
             System.out.println("[Nhập tên sản phẩm]: ");
             String nameproduct = scanner.nextLine();
-            if (!managerProduct.checkNameSp(nameproduct)) {
+            if (!ManagerProduct.checkNameSp(nameproduct)) {
                 System.out.print("ok!\n");
                 return nameproduct;
             } else {
@@ -56,20 +56,25 @@ public class CreateProduct {
                 1. Tanh\s
                 2. Không tanh\s
                 """;
-        while (true) {
-            System.out.println(menuchoice);
-            System.out.println("Chọn: ");
-            choice = Integer.parseInt(scanner.nextLine());
-            switch (choice) {
-                case 1:
-                    classify = "Món tanh";
-                    return classify;
-                case 2:
-                    classify = "Món không tanh";
-                    return classify;
-                default:
-                    System.err.println("Chọn (1) hoặc (2)!!");
-            }
+            while (true) {
+                try {
+                System.out.println(menuchoice);
+                System.out.println("Chọn: ");
+                choice = Integer.parseInt(scanner.nextLine());
+                switch (choice) {
+                    case 1 -> {
+                        classify = "Món tanh";
+                        return classify;
+                    }
+                    case 2 -> {
+                        classify = "Món không tanh";
+                        return classify;
+                    }
+                    default -> System.err.println("Chọn (1) hoặc (2)!!");
+                }
+            } catch (NumberFormatException e) {
+                    System.err.println("Nhập số!!" + '\n');
+                }
         }
     }
 

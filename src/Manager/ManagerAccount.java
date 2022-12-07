@@ -14,11 +14,12 @@ public class ManagerAccount {
     public static List<Account> accounts = ReadWriteAccount.readFile();
 
     public static Account createAccount() {
-        return new Account(createAccount.id(), createAccount.name(), createAccount.username(), createAccount.password(), createAccount.phoneNumber(), createAccount.role());
+        return new Account(createAccount.id(), createAccount.name(), createAccount.username(), createAccount.password(), createAccount.phoneNumber(), createAccount.money(), createAccount.role());
     }
 
     public static void show() {
         System.out.println("Tổng số tài khoản hiện có: " + "<" + accounts.size() + ">");
+        System.out.println("------------------------------------------------");
         for (int i = 0; i < accounts.size(); i++) {
             System.out.println(accounts.get(i).toString());
         }
@@ -27,33 +28,17 @@ public class ManagerAccount {
     public static void register(Account account) {
         accounts.add(account);
         ReadWriteAccount.writeFile(accounts);
-        System.out.println("Tạo thành công! \n");
+        System.out.println("Tạo thành công!" + "\n");
     }
 
-    public static int checkLogin() {
-        int count = 3;
+    public static int checkLogin(String username, String password) {
         while (true) {
-            System.out.println("[Nhập tài khoản]: ");
-            String username = scanner.nextLine();
-            System.out.println("[Nhập mật khẩu]: ");
-            String password = scanner.nextLine();
-            if (checkAccount(username, password) == 1 || checkAccount(username, password) == -1) {
-                System.out.println("Đăng nhập thành công! \n");
-                if (checkAccount(username, password) == 1) {
-                    System.out.println("Hello Admin " + checkName(username, password) + " !" + "\n");
-                    return 1;
-                } else {
-                    System.out.println("Hello name " + checkName(username, password) + " !" + "\n");
-                    return -1;
-                }
+            if (checkAccount(username, password) == 1) {
+                System.out.println("Hello Admin " + checkName(username, password) + " !" + "\n");
+                return 1;
             } else {
-                count--;
-                System.err.println("Sai thông tin!!!");
-                System.err.println("Nhập sai 3 lần sẽ tự động thoát");
-                System.out.println("Số lần còn lại: " + "(" + count + ")\n");
-                if (count == 0) {
-                    return 0;
-                }
+                System.out.println("Hello " + checkName(username, password) + " !" + "\n");
+                return -1;
             }
         }
     }
@@ -65,15 +50,19 @@ public class ManagerAccount {
                 """;
         System.out.println(menu);
         while (true) {
-            int choice = Integer.parseInt(scanner.nextLine());
-            switch (choice) {
-                case 1:
-                    return true;
-                case 2:
-                    return false;
-                default:
-                    System.err.println("Vui lòng chọn (1) hoặc (2)");
-                    break;
+            try {
+                int choice = Integer.parseInt(scanner.nextLine());
+                switch (choice) {
+                    case 1:
+                        return true;
+                    case 2:
+                        return false;
+                    default:
+                        System.err.println("Vui lòng chọn (1) hoặc (2)" + '\n');
+                        break;
+                }
+            } catch (NumberFormatException e) {
+                System.err.println("Nhập số!!" + '\n');
             }
         }
     }
@@ -92,22 +81,22 @@ public class ManagerAccount {
                     if (newpassword.matches("^[A-Z].{7,}$")) {
                         for (int i = 0; i < accounts.size(); i++) {
                             if (accounts.get(i).getUsername().equals(username) && accounts.get(i).getPassword().equals(password)) {
-                                Account newAccount = new Account(accounts.get(i).getId(), accounts.get(i).getName(), username, newpassword, accounts.get(i).getPhone(), accounts.get(i).getRole());
+                                Account newAccount = new Account(accounts.get(i).getId(), accounts.get(i).getName(), username, newpassword, accounts.get(i).getPhone(), accounts.get(i).getMoney(), accounts.get(i).getRole());
                                 accounts.set(i, newAccount);
                                 ReadWriteAccount.writeFile(accounts);
-                                System.out.println("Đổi thành công! \n");
+                                System.out.println("Đổi thành công!" + "\n");
                                 return;
                             }
                         }
                     } else {
                         System.err.println("Mật khẩu không hợp lệ!!!");
-                        System.err.println("Đổi thất bại!!! \n");
+                        System.err.println("Đổi thất bại!!!" + "\n");
                         if (backOrNext()) {
                             return;
                         }
                     }
                 } else {
-                    System.err.println("Sai thông tin!!! \n");
+                    System.err.println("Sai thông tin!!!" + "\n");
                     if (backOrNext()) {
                         return;
                     }
@@ -118,12 +107,12 @@ public class ManagerAccount {
     }
 
     public static void searchAccount() {
-        System.out.println("[Nhập tên tài khoản]: ");
-        String username = scanner.nextLine();
-        if (findAccountByUser(username) >= 0) {
-            System.out.println(accounts.get(findAccountByUser(username)).toString());
+        System.out.println("[Nhập tên người dùng]: ");
+        String name = scanner.nextLine();
+        if (findIndexAccountByName(name) >= 0) {
+            System.out.println(accounts.get(findIndexAccountByName(name)).toString());
         } else {
-            System.out.println("Không tìm thấy tài khoản!!! \n");
+            System.err.println("Không tìm thấy tài khoản!!!" + "\n");
         }
     }
 
@@ -131,9 +120,18 @@ public class ManagerAccount {
     //    ( . .)
     //    | v  > <==3 cak
 
-    public static int findAccountByUser(String username) {
+    public static int findIndexAccountByUser(String username) {
         for (int i = 0; i < accounts.size(); i++) {
             if (accounts.get(i).getUsername().equals(username)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static int findIndexAccountByName(String name) {
+        for (int i = 0; i < accounts.size(); i++) {
+            if (accounts.get(i).getName().equals(name)) {
                 return i;
             }
         }
@@ -149,7 +147,8 @@ public class ManagerAccount {
                     return -1;
                 }
             }
-        } return 0;
+        }
+        return 0;
     }
 
     public static boolean checkId(int id) {
@@ -161,11 +160,13 @@ public class ManagerAccount {
         return false;
     }
 
+
     public static String checkName(String username, String password) {
         for (int i = 0; i < accounts.size(); i++) {
             if (accounts.get(i).getUsername().equals(username) && accounts.get(i).getPassword().equals(password)) {
                 return accounts.get(i).getName();
             }
-        } return null;
+        }
+        return null;
     }
 }

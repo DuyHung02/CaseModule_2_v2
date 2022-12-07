@@ -7,10 +7,11 @@ public class MenuAdmin {
 
     public static int menuAdmin() {
         int choice;
-        String menu = "(Admin) Chọn chức năng: \n" +
-                "1. Quản lý tài khoản\n" +
-                "2. Quản lý sản phẩm\n" +
-                "3. Đăng xuất";
+        String menu = """
+                (Admin) Chọn chức năng:\s
+                1. Quản lý tài khoản
+                2. Quản lý sản phẩm
+                0. Đăng xuất""";
         while (true) {
             try {
                 System.out.println(menu);
@@ -20,7 +21,7 @@ public class MenuAdmin {
                         return 1;
                     case 2:
                         return 2;
-                    case 3:
+                    case 0:
                         return 0;
                     default:
                         System.err.println("Không có chức năng này!!");
@@ -32,12 +33,14 @@ public class MenuAdmin {
     }
 
     public static void menuAdminAccount() {
-        String menu = "Chọn chức năng\n" +
-                "1. Hiển thị danh sách tài khoản\n" +
-                "2. Tìm kiếm tài khoản\n" +
-                "3. Sửa tài khoản\n" +
-                "4. Xóa tài khoản\n" +
-                "5. Thoát\n";
+        String menu = """
+                Chọn chức năng: \s
+                1. Hiển thị danh sách tài khoản
+                2. Tìm kiếm tài khoản
+                3. Sửa tài khoản
+                4. Xóa tài khoản
+                0. Thoát
+                """;
         System.out.println(menu);
     }
 }

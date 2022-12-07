@@ -3,15 +3,13 @@ package Manager;
 import Product.CreateProduct;
 import Product.Product;
 import ReadWriteFile.ReadWriteProduct;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class ManagerProduct {
-    static Scanner scanner = new Scanner(System.in);
+public class ManagerProduct extends Product {
+    public static Scanner scanner = new Scanner(System.in);
     static CreateProduct createProduct = new CreateProduct();
-    static List<Product> products = ReadWriteProduct.readFileSp();
+    public static List<Product> products = ReadWriteProduct.readFileSp();
 
     public static Product createProduct() {
         return new Product(createProduct.idProduct(), createProduct.nameProduct(), createProduct.priceProduct(), createProduct.classifyProduct(), createProduct.amountProduct());
@@ -25,6 +23,7 @@ public class ManagerProduct {
 
     public static void show() {
         System.out.println("Tổng số món hiện có: " + "(" + products.size() + ")");
+        System.out.println("--------------------------------------------------");
         for (int i = 0; i < products.size(); i++) {
             System.out.println(products.get(i).toString());
         }
@@ -36,49 +35,54 @@ public class ManagerProduct {
         for (int i = 0; i < products.size(); i++) {
             if (products.get(i).getNameproduct().equals(nameProduct)) {
                 int choice;
-                String menu = "Chọn chức năng\n" +
-                        "1. Thay đổi tên\n" +
-                        "2. Thay đổi giá\n" +
-                        "3. Thay đổi phân loại\n" +
-                        "4. Thay đổi số lượng\n" +
-                        "5. Quay lại";
+                String menu = """
+                        Chọn chức năng
+                        1. Thay đổi tên
+                        2. Thay đổi giá
+                        3. Thay đổi phân loại
+                        4. Thay đổi số lượng
+                        0. Quay lại""";
                 while (true) {
                     System.out.println(menu);
                     System.out.println("Chọn: ");
-                    choice = Integer.parseInt(scanner.nextLine());
-                    switch (choice) {
-                        case 1:
-                            String newNameProduct = ManagerProduct.createProduct.nameProduct();
-                            Product productName = new Product(products.get(i).getId(), newNameProduct, products.get(i).getPriceproduct(), products.get(i).getClassify(), products.get(i).getAmount());
-                            products.set(i, productName);
-                            ReadWriteProduct.writeFileSp(products);
-                            System.out.println("OK!!\n");
-                            break;
-                        case 2:
-                            double newPriceProduct = ManagerProduct.createProduct.priceProduct();
-                            Product productPrice = new Product(products.get(i).getId(), products.get(i).getNameproduct(), newPriceProduct, products.get(i).getClassify(), products.get(i).getAmount());
-                            products.set(i, productPrice);
-                            ReadWriteProduct.writeFileSp(products);
-                            System.out.println("OK!!\n");
-                            break;
-                        case 3:
-                            String newClassifyProduct = ManagerProduct.createProduct.classifyProduct();
-                            Product productClassify = new Product(products.get(i).getId(), products.get(i).getNameproduct(), products.get(i).getPriceproduct(), newClassifyProduct, products.get(i).getAmount());
-                            products.set(i, productClassify);
-                            ReadWriteProduct.writeFileSp(products);
-                            System.out.println("OK!!\n");
-                            break;
-                        case 4:
-                            int newAmountProduct = ManagerProduct.createProduct.amountProduct();
-                            Product productAmount = new Product(products.get(i).getId(), products.get(i).getNameproduct(), products.get(i).getPriceproduct(), products.get(i).getClassify(), newAmountProduct);
-                            products.set(i, productAmount);
-                            ReadWriteProduct.writeFileSp(products);
-                            System.out.println("OK!!\n");
-                            break;
-                        case 5:
-                            return;
-                        default:
-                            System.err.println("Không có chức năng này!!\n");
+                    try {
+                        choice = Integer.parseInt(scanner.nextLine());
+                        switch (choice) {
+                            case 1:
+                                String newNameProduct = ManagerProduct.createProduct.nameProduct();
+                                Product productName = new Product(products.get(i).getId(), newNameProduct, products.get(i).getPriceproduct(), products.get(i).getClassify(), products.get(i).getAmount());
+                                products.set(i, productName);
+                                ReadWriteProduct.writeFileSp(products);
+                                System.out.println("OK!!\n");
+                                break;
+                            case 2:
+                                double newPriceProduct = ManagerProduct.createProduct.priceProduct();
+                                Product productPrice = new Product(products.get(i).getId(), products.get(i).getNameproduct(), newPriceProduct, products.get(i).getClassify(), products.get(i).getAmount());
+                                products.set(i, productPrice);
+                                ReadWriteProduct.writeFileSp(products);
+                                System.out.println("OK!!\n");
+                                break;
+                            case 3:
+                                String newClassifyProduct = ManagerProduct.createProduct.classifyProduct();
+                                Product productClassify = new Product(products.get(i).getId(), products.get(i).getNameproduct(), products.get(i).getPriceproduct(), newClassifyProduct, products.get(i).getAmount());
+                                products.set(i, productClassify);
+                                ReadWriteProduct.writeFileSp(products);
+                                System.out.println("OK!!\n");
+                                break;
+                            case 4:
+                                int newAmountProduct = ManagerProduct.createProduct.amountProduct();
+                                Product productAmount = new Product(products.get(i).getId(), products.get(i).getNameproduct(), products.get(i).getPriceproduct(), products.get(i).getClassify(), newAmountProduct);
+                                products.set(i, productAmount);
+                                ReadWriteProduct.writeFileSp(products);
+                                System.out.println("OK!!\n");
+                                break;
+                            case 0:
+                                return;
+                            default:
+                                System.err.println("Không có chức năng này!!\n");
+                        }
+                    } catch (NumberFormatException e) {
+                        System.err.println("Nhập số!!" + '\n');
                     }
                 }
             }

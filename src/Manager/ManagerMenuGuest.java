@@ -1,34 +1,39 @@
 package Manager;
 
-import Menu.MenuProduct;
+import Cart.Cart;
+import Menu.MenuGuest;
 import Product.Product;
+import ReadWriteFile.ReadWriteCart;
 
-public class ManagerMenuProduct extends ManagerProduct {
-    public static void managerMenuProduct() {
+import java.util.List;
+
+public class ManagerMenuGuest extends ManagerGuest {
+
+    public static void managerMenuGuest(String username) {
         int choice;
+        int index = findIndexAccountByUser(username);
         while (true) {
             try {
-                MenuProduct.menuProduct();
-                System.out.println("Chọn chức năng");
+                MenuGuest.menuGuest();
+                System.out.println("Chọn: ");
                 choice = Integer.parseInt(scanner.nextLine());
                 switch (choice) {
                     case 1:
-                        ManagerProduct.show();
+                        info(index);
                         break;
                     case 2:
-                        Product product = ManagerProduct.createProduct();
-                        ManagerProduct.add(product);
+                        editPassword();
                         break;
                     case 3:
-                        ManagerProduct.edit();
+                        Cart.buyProduct(username);
                         break;
                     case 4:
-                        ManagerProduct.deleteByName();
+                        naptien(index);
                         break;
                     case 0:
                         return;
                     default:
-                        System.err.println("Không có chức năng này!!\n");
+                        System.err.println("Không có chức năng này!!");
                 }
             } catch (NumberFormatException e) {
                 System.err.println("Nhập số!!" + '\n');

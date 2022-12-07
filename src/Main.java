@@ -11,10 +11,10 @@ public class Main {
         String menu = """
                 1. Đăng kí
                 2. Đăng nhập
-                3. Thoát
+                0. Thoát
                 Chọn chức năng:\s""";
-        int choice = 0;
-        while (choice != 3) {
+        int choice = -1;
+        while (choice != 0) {
             System.out.println(menu);
             try {
                 choice = Integer.parseInt(scanner.nextLine());
@@ -26,7 +26,7 @@ public class Main {
                     case 2:
                         ManagerLogin.login();
                         break;
-                    case 3:
+                    case 0:
                         break;
                     default:
                         System.err.println("Không có chức năng này!!\n");

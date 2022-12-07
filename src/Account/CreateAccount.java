@@ -7,12 +7,11 @@ import java.util.regex.Pattern;
 
 public class CreateAccount {
     static Scanner scanner = new Scanner(System.in);
-    static ManagerAccount managerAccount = new ManagerAccount();
 
     public int id() {
         int id = 1;
         while (true) {
-            if (managerAccount.checkId(id)) {
+            if (ManagerAccount.checkId(id)) {
                 ++id;
             } else {
                 return id;
@@ -20,10 +19,9 @@ public class CreateAccount {
         }
     }
 
-    public String name(){
+    public String name() {
         System.out.println("[Tên người sử dụng]: ");
-        String name = scanner.nextLine();
-        return name;
+        return scanner.nextLine();
     }
 
     public String username() {
@@ -31,12 +29,12 @@ public class CreateAccount {
             System.out.println("[Nhập tài khoản Gmail]: ");
             String username = scanner.nextLine();
             String regex = "^[A-Za-z0-9]+[A-Za-z0-9]*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)$";
-            if (managerAccount.findAccountByUser(username) == -1) {
+            if (ManagerAccount.findIndexAccountByUser(username) == -1) {
                 if (username.matches(regex)) {
                     System.out.println("Tài khoản hợp lệ \n");
                     return username;
                 } else {
-                    System.err.println("Tài khoản không hợp lệ!!" + "\n");
+                    System.err.println("Tài khoản phải có đuôi @gmail.com!!" + "\n");
                 }
             } else {
                 System.err.println("Tài khoản đã tồn tại" + "\n");
@@ -73,21 +71,31 @@ public class CreateAccount {
         }
     }
 
+    public double money() {
+        return 0;
+    }
+
     public int role() {
         int choice;
-        String menu = "Chọn quyền\n" +
-                "1. Admin\n" +
-                "2. Guest\n";
+        String menu = """
+                Chọn quyền
+                1. Admin
+                2. Guest
+                """;
         while (true) {
-            System.out.println(menu);
-            choice = Integer.parseInt(scanner.nextLine());
-            switch (choice) {
-                case 1:
-                    return 1;
-                case 2:
-                    return -1;
-                default:
-                    System.out.println("Không có chức năng này");
+            try {
+                System.out.println(menu);
+                choice = Integer.parseInt(scanner.nextLine());
+                switch (choice) {
+                    case 1:
+                        return 1;
+                    case 2:
+                        return -1;
+                    default:
+                        System.err.println("Không có chức năng này!!" + '\n');
+                }
+            } catch (NumberFormatException e) {
+                System.err.println("Nhập số!!" + '\n');
             }
         }
     }
