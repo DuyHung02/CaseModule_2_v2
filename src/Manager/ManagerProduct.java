@@ -22,6 +22,7 @@ public class ManagerProduct extends Product {
     }
 
     public static void show() {
+        System.out.println("--------[ Danh sách sản phẩm ]--------");
         System.out.println("Tổng số món hiện có: " + "(" + products.size() + ")");
         System.out.println("--------------------------------------------------");
         for (int i = 0; i < products.size(); i++) {

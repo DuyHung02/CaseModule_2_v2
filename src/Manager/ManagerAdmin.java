@@ -1,6 +1,7 @@
 package Manager;
 
 import Menu.MenuAdmin;
+import ReadWriteFile.ReadWriteAccount;
 
 
 public class ManagerAdmin extends ManagerAccount {
@@ -33,6 +34,7 @@ public class ManagerAdmin extends ManagerAccount {
             for (int i = 0; i < accounts.size(); i++) {
                 if (accounts.get(i).getId() == id) {
                     accounts.remove(i);
+                    ReadWriteAccount.writeFile(accounts);
                     System.out.println("Xóa thành công!");
                 }
             }
@@ -138,7 +140,9 @@ public class ManagerAdmin extends ManagerAccount {
         while (true) {
             System.out.println("Nhập tên tài khoản muốn gỡ quyền Admin: ");
             String userName = scanner.nextLine();
-            if (findIndexAccountByUser(userName) >= 0) {
+            if (checkMainAdmin(userName).equals("admin@gmail.com")) {
+                System.err.println("Không thể gỡ tài khoản Admin gốc!!");
+            } else if (findIndexAccountByUser(userName) >= 0) {
                 String menu =
                         "Gỡ quyền Admin cho tài khoản " + userName + " ?" + '\n' +
                                 "1. Xác nhận" + '\n' +

@@ -14,7 +14,7 @@ public class MenuGuest {
                 |   3. Mua hàng                       |
                 |   4. Nạp tiền                       |
                 |   0. Đăng xuất                      |
-                                                      |
+                |                                     |
                 o _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ o
                 """;
         System.out.println(menu);

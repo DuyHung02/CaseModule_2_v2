@@ -1,5 +1,6 @@
 package Cart;
 
+import Manager.ManagerAccount;
 import Manager.ManagerProduct;
 import Product.Product;
 import ReadWriteFile.ReadWriteCart;
@@ -12,6 +13,27 @@ public class Cart extends ManagerProduct {
         for (int i = 0; i < products.size(); i++) {
             if (products.get(i).getNameproduct().equals(name))
                 return i;
+        }
+        return -1;
+    }
+
+    public static void removeCart(String username) {
+        if (removeProductByName(username) >= 0) {
+            System.out.println("Xóa thành công!!" + '\n');
+        } else {
+            System.err.println("Không thấy sản phẩm!!" + '\n');
+        }
+    }
+    public static int removeProductByName(String username) {
+        List<Product> carts = ReadWriteCart.readFileCart(username);
+        System.out.println("Nhập tên hàng muốn xóa: ");
+        String nameProduct = scanner.nextLine();
+        for (int i = 0; i < carts.size(); i++) {
+            if (carts.get(i).getNameproduct().equals(nameProduct)) {
+                carts.remove(i);
+                ReadWriteCart.writeFileCart(carts, username);
+                return i;
+            }
         }
         return -1;
     }
@@ -33,7 +55,7 @@ public class Cart extends ManagerProduct {
                 }
                 System.out.println("1. Chọn tiếp");
                 System.out.println("2. Lưu và thoát");
-                int choice = 0;
+                int choice;
                 try {
                     choice = Integer.parseInt(scanner.nextLine());
                     switch (choice) {
@@ -66,6 +88,32 @@ public class Cart extends ManagerProduct {
         }
     }
 
+    public static void menuCheckCart(String username) {
+        List<Product> carts = ReadWriteCart.readFileCart(username);
+        System.out.println("        -----[ Giỏ hàng của " + ManagerAccount.checkName(username) + " ]-----");
+        for (int i = 0; i < carts.size(); i++) {
+            System.out.println(carts.get(i).displayCart());
+        }
+        while (true) {
+            try {
+                System.out.println("1. Xóa khỏi giỏ hàng");
+                System.out.println("2. Quay lại");
+                int choice = Integer.parseInt(scanner.nextLine());
+                switch (choice) {
+                    case 1:
+                        removeCart(username);
+                        break;
+                    case 2:
+                        return;
+                    default:
+                        System.err.println("Không có chức năng này!!" + '\n');
+                }
+            } catch (NumberFormatException e) {
+                System.err.println("Nhập số!!" + '\n');
+            }
+        }
+    }
+
     public static int choiceMenu(String username) {
         while (true) {
             int choice;
@@ -78,10 +126,7 @@ public class Cart extends ManagerProduct {
             choice = Integer.parseInt(scanner.nextLine());
             switch (choice) {
                 case 1:
-                    List<Product> carts = ReadWriteCart.readFileCart(username);
-                    for (int i = 0; i < carts.size(); i++) {
-                        System.out.println(carts.get(i).displayCart());
-                    }
+                    menuCheckCart(username);
                     break;
                 case 2:
                     return 2;

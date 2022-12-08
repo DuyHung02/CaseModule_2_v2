@@ -3,6 +3,8 @@ package Account;
 import java.io.Serial;
 import java.io.Serializable;
 
+import static Manager.ManagerAccount.accounts;
+
 public class Account implements Serializable {
     @Serial
     private static final long serialVersionUID = -2306144997897254504L;

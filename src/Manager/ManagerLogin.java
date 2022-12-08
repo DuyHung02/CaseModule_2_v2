@@ -31,6 +31,25 @@ public class ManagerLogin {
                 System.err.println("Nhập sai 3 lần sẽ tự động thoát");
                 System.out.println("Số lần còn lại: " + "(" + count + ")\n");
             }
+            System.out.println("Nhập lại?");
+            System.out.println("1. Đồng ý");
+            System.out.println("2. Thoát");
+            while (true) {
+                try {
+                    int choice = Integer.parseInt(scanner.nextLine());
+                    switch (choice) {
+                        case 1:
+                            break;
+                        case 2:
+                            return;
+                        default:
+                            System.err.println("Nhập (1) hoặc (2) !!" + '\n');
+                    }
+                    break;
+                } catch (NumberFormatException e) {
+                    System.err.println("Nhập số!!");
+                }
+            }
             if (count == 0) {
                 return;
             }

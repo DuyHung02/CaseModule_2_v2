@@ -18,6 +18,7 @@ public class ManagerAccount {
     }
 
     public static void show() {
+        System.out.println("--------[ Danh sách tài khoản ]--------");
         System.out.println("Tổng số tài khoản hiện có: " + "<" + accounts.size() + ">");
         System.out.println("------------------------------------------------");
         for (int i = 0; i < accounts.size(); i++) {
@@ -34,10 +35,10 @@ public class ManagerAccount {
     public static int checkLogin(String username, String password) {
         while (true) {
             if (checkAccount(username, password) == 1) {
-                System.out.println("    [ Hello Admin " + checkName(username, password) + " ! ]" + "\n");
+                System.out.println("    [ Hello Admin " + checkName(username) + " ! ]" + "\n");
                 return 1;
             } else {
-                System.out.println("    [ Hello " + checkName(username, password) + " ! ]" + "\n");
+                System.out.println("    [ Hello " + checkName(username) + " ! ]" + "\n");
                 return -1;
             }
         }
@@ -160,13 +161,21 @@ public class ManagerAccount {
         return false;
     }
 
-
-    public static String checkName(String username, String password) {
+    public static String checkName(String username) {
         for (int i = 0; i < accounts.size(); i++) {
-            if (accounts.get(i).getUsername().equals(username) && accounts.get(i).getPassword().equals(password)) {
+            if (accounts.get(i).getUsername().equals(username)) {
                 return accounts.get(i).getName();
             }
         }
         return null;
+    }
+
+    public static String checkMainAdmin(String username) {
+        for (int i = 0; i < accounts.size(); i++) {
+            if (accounts.get(i).getUsername().equals(username)) {
+                return username;
+            }
+        }
+        return username;
     }
 }
