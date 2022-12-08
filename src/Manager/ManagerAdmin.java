@@ -57,6 +57,8 @@ public class ManagerAdmin extends ManagerAccount {
                     case 2:
                         roleGuest();
                         break;
+                    case 0:
+                        return;
                 }
             } catch (NumberFormatException e) {
                 System.err.println("Nhập số!!" + '\n');

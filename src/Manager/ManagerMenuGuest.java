@@ -2,10 +2,7 @@ package Manager;
 
 import Cart.Cart;
 import Menu.MenuGuest;
-import Product.Product;
-import ReadWriteFile.ReadWriteCart;
 
-import java.util.List;
 
 public class ManagerMenuGuest extends ManagerGuest {
 
